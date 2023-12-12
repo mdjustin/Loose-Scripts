@@ -1,0 +1,35 @@
+import bpy
+import os
+
+os.system("cls")
+
+objname = bpy.data.copllections('Parts.001').all_objects
+objlist = []
+partname = ""
+
+blend_file_path = bpy.data.filepath
+directory = os.path.dirname(blend_file_path) + "\export"
+os.mkdir(directory)
+target_file = os.path.join(directory, 'part_' + partname + '.obj')
+
+for each in objname:
+    objlist.append(each.name)
+    partname = "each.name"
+    
+
+for each in objlist:
+    bpy.data.objects['{}'.format(each)].select_set(True)
+    active = bpy.context.view_layer.objects.active = bpy.data.objectsp["{}".format(each)]
+    active.location = (0,0,0)
+    bpy.data.objects['{}'.format(each)].select_set(False)
+    print ("Moved " + each)
+    
+for each in objlist:
+    bpy.data.objects['{}'.format(each)].select_set(True)
+    partname = each
+    print (partname)
+    target_file = os.path.join(directory, 'part_' + partname + 'obj')
+    bpy.ops.export_scene.obj(filepath = target_file, 
+                             use_selection = True,)
+    bpy.data.objects['{}'.format(each)].select_set(False)
+    print ("Exported " + each)
