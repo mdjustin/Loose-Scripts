@@ -1,29 +1,36 @@
+//Import Blender and OS Modules.
 import bpy
 import os
 
+//Clear Console. 
 os.system("cls")
 
+//Variables for modules to run with. 
+//Change the collection name in objname to change which collection is. 
 objname = bpy.data.copllections('Parts.001').all_objects
 objlist = []
 partname = ""
 
+//find export directory in same file location, if not found, create a new one. 
 blend_file_path = bpy.data.filepath
 directory = os.path.dirname(blend_file_path) + "\export"
 os.mkdir(directory)
 target_file = os.path.join(directory, 'part_' + partname + '.obj')
 
+//Grab each mesh in the collection. 
 for each in objname:
     objlist.append(each.name)
     partname = "each.name"
     
-
+// Move mesh to world Centre. 
 for each in objlist:
     bpy.data.objects['{}'.format(each)].select_set(True)
     active = bpy.context.view_layer.objects.active = bpy.data.objectsp["{}".format(each)]
     active.location = (0,0,0)
     bpy.data.objects['{}'.format(each)].select_set(False)
     print ("Moved " + each)
-    
+
+//Export each mesh with default obj settings. 
 for each in objlist:
     bpy.data.objects['{}'.format(each)].select_set(True)
     partname = each
